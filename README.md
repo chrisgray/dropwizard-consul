@@ -1,0 +1,4 @@
+dropwizard-consul
+=================
+
+Dropwizard + Consul
