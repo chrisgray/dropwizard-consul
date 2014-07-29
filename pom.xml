@@ -23,6 +23,7 @@
     <modules>
         <module>consul-healthcheck</module>
         <module>consul-client</module>
+        <module>consul-api</module>
     </modules>
 
     <scm>

@@ -1,0 +1,10 @@
+{
+    "Address": "10.84.228.186",
+    "Node": "test-node",
+    "ServiceID": "foobar",
+    "ServiceName": "foobar",
+    "ServicePort": 8080,
+    "ServiceTags": [
+        "production"
+    ]
+}
