@@ -17,6 +17,7 @@ import static com.codahale.metrics.MetricRegistry.name;
 public class ConsulClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConsulClient.class);
     protected static final String v1CheckPassId = "/v1/agent/check/pass";
+    protected static final String v1CatalogServiceId = "/v1/catalog/service";
     private final Timer v1AgentCheckPassTimer;
     protected final Client client;
     protected final URI consulUri;

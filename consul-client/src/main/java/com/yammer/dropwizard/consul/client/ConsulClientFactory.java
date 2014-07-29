@@ -11,7 +11,9 @@ public class ConsulClientFactory {
     }
 
     public ConsulClient create(Environment environment) {
-        return new ConsulClient(new JerseyClientBuilder(environment)
+        return new ConsulClient(
+                environment.metrics(),
+                new JerseyClientBuilder(environment)
                 .using(configuration)
                 .build("consul-client"),
                 configuration.getUri());
