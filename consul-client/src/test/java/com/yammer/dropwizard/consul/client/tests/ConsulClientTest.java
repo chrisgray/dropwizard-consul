@@ -2,7 +2,10 @@ package com.yammer.dropwizard.consul.client.tests;
 
 import com.codahale.metrics.MetricRegistry;
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableList;
+import com.google.common.net.InetAddresses;
 import com.sun.jersey.api.client.ClientResponse;
+import com.yammer.dropwizard.consul.api.CatalogServiceModel;
 import com.yammer.dropwizard.consul.client.ConsulClient;
 import com.yammer.dropwizard.consul.client.ConsulClientConfiguration;
 import com.yammer.dropwizard.consul.client.ConsulClientFactory;
@@ -67,5 +70,19 @@ public class ConsulClientTest {
         final Optional<ClientResponse> clientResponse = client.v1AgentCheckPass("service:foobar");
         assertThat(clientResponse.isPresent()).isTrue();
         assertThat(clientResponse.get().getStatus()).isEqualTo(Response.Status.OK.getStatusCode());
+    }
+
+    @Test @Ignore
+    public void v1CatalogServiceId() {
+        final ConsulClient client = new ConsulClientFactory(configuration).create(environment);
+        final Optional<Iterable<CatalogServiceModel>> catalogServiceModels = client.v1CatalogService("foobar");
+        assertThat(catalogServiceModels.isPresent()).isTrue();
+        assertThat(catalogServiceModels.get()).containsExactly(new CatalogServiceModel(
+                InetAddresses.forString("10.84.228.186"),
+                "C02J42Q4DKQ4",
+                "foobar",
+                "foobar",
+                (short)8080,
+                ImmutableList.of("production")));
     }
 }

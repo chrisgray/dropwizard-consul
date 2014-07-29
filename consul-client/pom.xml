@@ -17,6 +17,10 @@
             <artifactId>dropwizard-client</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.yammer.dropwizard.consul</groupId>
+            <artifactId>consul-api</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-testing</artifactId>
         </dependency>
