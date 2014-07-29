@@ -1,0 +1,6 @@
+applicationName: test
+checkInterval: 2500ms
+client:
+  connectionTimeout: 100ms
+  timeout: 200ms
+  uri: http://localhost:8080

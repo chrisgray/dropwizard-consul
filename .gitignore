@@ -1,0 +1,8 @@
+.clover
+.idea
+*.iml
+*.tmp
+target*
+.project
+.settings
+.classpath
