@@ -45,7 +45,6 @@ public class ConsulClientTest {
                 .getValidator(),
                 new MetricRegistry(),
                 Thread.currentThread().getContextClassLoader());
-
     }
 
     @Test

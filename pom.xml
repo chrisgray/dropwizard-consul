@@ -24,6 +24,7 @@
         <module>consul-healthcheck</module>
         <module>consul-client</module>
         <module>consul-api</module>
+        <module>consul-ribbon</module>
     </modules>
 
     <scm>
@@ -40,6 +41,7 @@
 
     <properties>
         <dropwizard.version>0.7.1</dropwizard.version>
+        <ribbon-loadbalancer.version>2.0-RC4</ribbon-loadbalancer.version>
     </properties>
 
     <developers>
@@ -52,6 +54,11 @@
 
     <dependencyManagement>
         <dependencies>
+        <dependency>
+            <groupId>com.netflix.ribbon</groupId>
+            <artifactId>ribbon-loadbalancer</artifactId>
+            <version>${ribbon-loadbalancer.version}</version>
+        </dependency>
             <dependency>
                 <groupId>com.yammer.dropwizard.consul</groupId>
                 <artifactId>consul-client</artifactId>
