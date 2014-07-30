@@ -26,6 +26,7 @@
         <module>consul-client</module>
         <module>consul-api</module>
         <module>consul-ribbon</module>
+        <module>consul-example</module>
     </modules>
 
     <scm>
@@ -102,6 +103,11 @@
             </dependency>
             <dependency>
                 <groupId>com.yammer.dropwizard.consul</groupId>
+                <artifactId>consul-ribbon</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.yammer.dropwizard.consul</groupId>
                 <artifactId>consul-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -119,7 +125,6 @@
                 <groupId>com.yammer.dropwizard</groupId>
                 <artifactId>dropwizard-testing</artifactId>
                 <version>${dropwizard.version}</version>
-
                 <scope>test</scope>
             </dependency>
         </dependencies>
