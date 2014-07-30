@@ -15,8 +15,8 @@ import static com.codahale.metrics.MetricRegistry.name;
 
 public class ConsulClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConsulClient.class);
-    protected static final String v1CheckPassId = "/v1/agent/check/pass";
-    protected static final String v1CatalogServiceId = "/v1/catalog/service";
+    protected static final String V1_CHECK_PASS_ID = "/v1/agent/check/pass";
+    protected static final String V1_CATALOG_SERVICE_ID = "/v1/catalog/service";
     private final Timer v1AgentCheckPassTimer;
     private final Timer v1CatalogServiceTimer;
     protected final Client client;
@@ -37,11 +37,11 @@ public class ConsulClient {
             ClientResponse clientResponse = null;
             try {
                 return Optional.of(clientResponse = client.resource(consulUri)
-                        .path(v1CheckPassId)
+                        .path(V1_CHECK_PASS_ID)
                         .path(checkId)
                         .get(ClientResponse.class));
             } catch (ClientHandlerException | UniformInterfaceException err) {
-                LOGGER.warn("Exception on {}", v1CheckPassId, err);
+                LOGGER.warn("Exception on {}", V1_CHECK_PASS_ID, err);
             } finally {
                 if (clientResponse != null) {
                     clientResponse.bufferEntity();
@@ -56,11 +56,12 @@ public class ConsulClient {
     public Optional<Iterable<CatalogServiceModel>> v1CatalogService(String serviceId) {
         try (Timer.Context timerContext = v1CatalogServiceTimer.time()) {
             return Optional.<Iterable<CatalogServiceModel>>of(client.resource(consulUri)
-                .path(v1CatalogServiceId)
+                .path(V1_CATALOG_SERVICE_ID)
                 .path(serviceId)
-                .get(new GenericType<ImmutableList<CatalogServiceModel>>(){}));
+                .get(new GenericType<ImmutableList<CatalogServiceModel>>() {
+                }));
         } catch (ClientHandlerException | UniformInterfaceException err) {
-            LOGGER.warn("Exception on {}", v1CatalogServiceId, err);
+            LOGGER.warn("Exception on {}", V1_CATALOG_SERVICE_ID, err);
         }
         return Optional.absent();
     }
