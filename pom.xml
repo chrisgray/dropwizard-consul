@@ -54,11 +54,11 @@
 
     <dependencyManagement>
         <dependencies>
-        <dependency>
-            <groupId>com.netflix.ribbon</groupId>
-            <artifactId>ribbon-loadbalancer</artifactId>
-            <version>${ribbon-loadbalancer.version}</version>
-        </dependency>
+            <dependency>
+                <groupId>com.netflix.ribbon</groupId>
+                <artifactId>ribbon-loadbalancer</artifactId>
+                <version>${ribbon-loadbalancer.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.yammer.dropwizard.consul</groupId>
                 <artifactId>consul-client</artifactId>
