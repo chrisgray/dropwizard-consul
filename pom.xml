@@ -42,6 +42,7 @@
     <properties>
         <dropwizard.version>0.7.1</dropwizard.version>
         <ribbon-loadbalancer.version>2.0-RC4</ribbon-loadbalancer.version>
+        <rxjava-core.version>0.20.0-RC3</rxjava-core.version>
     </properties>
 
     <developers>
@@ -55,9 +56,42 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>com.netflix.rxjava</groupId>
+                <artifactId>rxjava-core</artifactId>
+                <version>${rxjava-core.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.google.guava</groupId>
+                        <artifactId>guava</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-api</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
                 <groupId>com.netflix.ribbon</groupId>
                 <artifactId>ribbon-loadbalancer</artifactId>
                 <version>${ribbon-loadbalancer.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.google.guava</groupId>
+                        <artifactId>guava</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-api</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>com.yammer.dropwizard.consul</groupId>
