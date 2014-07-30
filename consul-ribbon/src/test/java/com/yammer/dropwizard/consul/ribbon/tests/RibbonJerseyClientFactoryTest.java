@@ -6,7 +6,11 @@ import com.sun.jersey.api.client.AsyncWebResource;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 import com.yammer.dropwizard.client.JerseyClientBuilder;
+import com.yammer.dropwizard.config.Configuration;
+import com.yammer.dropwizard.config.Environment;
 import com.yammer.dropwizard.consul.ribbon.RibbonJerseyClientFactory;
+import com.yammer.dropwizard.json.ObjectMapperFactory;
+import com.yammer.dropwizard.validation.Validator;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,23 +27,12 @@ public class RibbonJerseyClientFactoryTest {
     @Before
     @SuppressWarnings("unchecked")
     public void setup() {
-        client = new JerseyClientBuilder().build();
+        final Environment environment = new Environment("test-environment", new Configuration(), new ObjectMapperFactory(), new Validator());
+        client = new JerseyClientBuilder()
+            .using(environment)
+            .build();
         zoneAwareLoadBalancer = mock(ZoneAwareLoadBalancer.class);
     }
-
-//    private Environment environment() {
-//        return new Environment(
-//                "test-environment",
-//                Jackson.newObjectMapper(),
-//                Validation
-//                        .byProvider(HibernateValidator.class)
-//                        .configure()
-//                        .addValidatedValueHandler(new OptionalValidatedValueUnwrapper())
-//                        .buildValidatorFactory()
-//                        .getValidator(),
-//                new MetricRegistry(),
-//                Thread.currentThread().getContextClassLoader());
-//    }
 
     @Test
     public void webResourceHasAValidUri() {

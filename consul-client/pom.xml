@@ -23,6 +23,7 @@
         <dependency>
             <groupId>com.yammer.dropwizard</groupId>
             <artifactId>dropwizard-testing</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.netflix.ribbon</groupId>

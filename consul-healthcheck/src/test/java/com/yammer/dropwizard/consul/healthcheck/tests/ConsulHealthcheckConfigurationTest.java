@@ -1,5 +1,6 @@
 package com.yammer.dropwizard.consul.healthcheck.tests;
 
+import com.google.common.io.Resources;
 import com.yammer.dropwizard.config.ConfigurationFactory;
 import com.yammer.dropwizard.consul.healthcheck.ConsulHealthcheckConfiguration;
 import com.yammer.dropwizard.util.Duration;
@@ -13,11 +14,12 @@ import static org.fest.assertions.api.Assertions.assertThat;
 
 
 public class ConsulHealthcheckConfigurationTest {
+
     @Test
     public void parseConfiguration() throws Exception {
         final ConfigurationFactory<ConsulHealthcheckConfiguration> configurationFactory
             = ConfigurationFactory.forClass(ConsulHealthcheckConfiguration.class, new Validator());
-        final File configFile = new File("consul-healthcheck/src/test/resources/healthcheckConfiguration.yml");
+        final File configFile = new File(Resources.getResource("healthcheckConfiguration.yml").toURI());
         final ConsulHealthcheckConfiguration configuration = configurationFactory.build(configFile);
         assertThat(configuration.getApplicationName()).isEqualTo("test");
         assertThat(configuration.getCheckInterval()).isEqualTo(Duration.milliseconds(2500));
