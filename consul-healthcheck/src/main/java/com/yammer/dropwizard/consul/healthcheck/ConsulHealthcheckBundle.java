@@ -23,7 +23,7 @@ public class ConsulHealthcheckBundle implements ConfiguredBundle<ConsulHealthche
                 .scheduledExecutorService("consul-healthcheck-scheduler")
                 .threads(1)
                 .build()
-                .scheduleWithFixedDelay(
+                .scheduleAtFixedRate(
                         new ConsulHealthcheckScheduledTask(healthcheck),
                         0,
                         configuration.getCheckInterval().getQuantity(),
