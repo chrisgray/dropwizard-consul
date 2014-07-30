@@ -30,12 +30,12 @@ public class RibbonClient extends Client {
                 .build());
     }
 
-    @Override
+    @Override @Deprecated
     public WebResource resource(URI u) {
         return resource();
     }
 
-    @Override
+    @Override @Deprecated
     public AsyncWebResource asyncResource(URI u) {
         return asyncResource();
     }
