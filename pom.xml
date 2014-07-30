@@ -45,6 +45,7 @@
         <dropwizard.version>0.6.2</dropwizard.version>
         <ribbon-loadbalancer.version>2.0-RC4</ribbon-loadbalancer.version>
         <rxjava-core.version>0.20.0-RC3</rxjava-core.version>
+        <archaius-core.version>0.6.1</archaius-core.version>
     </properties>
 
     <developers>
@@ -126,6 +127,11 @@
                 <artifactId>dropwizard-testing</artifactId>
                 <version>${dropwizard.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.netflix.archaius</groupId>
+                <artifactId>archaius-core</artifactId>
+                <version>${archaius-core.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
