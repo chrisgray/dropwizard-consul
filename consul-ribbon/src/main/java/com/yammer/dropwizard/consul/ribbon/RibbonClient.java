@@ -20,13 +20,13 @@ public class RibbonClient extends Client {
 
     public WebResource resource() {
         return super.resource(UriBuilder
-                .fromPath(fetchServerOrThrow().getHostPort())
+                .fromPath("http://" + fetchServerOrThrow().getHostPort())
                 .build());
     }
 
     public AsyncWebResource asyncResource() {
         return super.asyncResource(UriBuilder
-                .fromPath(fetchServerOrThrow().getHostPort())
+                .fromPath("http://" + fetchServerOrThrow().getHostPort())
                 .build());
     }
 

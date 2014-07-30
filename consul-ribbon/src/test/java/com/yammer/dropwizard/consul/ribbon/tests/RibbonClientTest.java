@@ -40,7 +40,10 @@ public class RibbonClientTest {
         when(zoneAwareLoadBalancer.chooseServer()).thenReturn(new Server("test.com", 8080));
         final RibbonClient ribbonClient = new RibbonClientFactory(zoneAwareLoadBalancer).wrap(client);
         final WebResource webResource = ribbonClient.resource();
-        assertThat(webResource.getURI()).isEqualTo(URI.create("test.com:8080"));
+        assertThat(webResource.getURI().getScheme()).isEqualTo("http");
+        assertThat(webResource.getURI().getHost()).isEqualTo("test.com");
+        assertThat(webResource.getURI().getPort()).isEqualTo(8080);
+        assertThat(webResource.getURI()).isEqualTo(URI.create("http://test.com:8080"));
     }
 
     @Test(expected = IllegalStateException.class)
@@ -48,7 +51,7 @@ public class RibbonClientTest {
         when(zoneAwareLoadBalancer.chooseServer()).thenReturn(null);
         final RibbonClient ribbonClient = new RibbonClientFactory(zoneAwareLoadBalancer).wrap(client);
         final WebResource webResource = ribbonClient.resource();
-        assertThat(webResource.getURI()).isEqualTo(URI.create("test.com:8080"));
+        assertThat(webResource.getURI()).isEqualTo(URI.create("http://test.com:8080"));
     }
 
     @Test
@@ -56,6 +59,9 @@ public class RibbonClientTest {
         when(zoneAwareLoadBalancer.chooseServer()).thenReturn(new Server("test.com", 8080));
         final RibbonClient ribbonClient = new RibbonClientFactory(zoneAwareLoadBalancer).wrap(client);
         final AsyncWebResource asyncWebResource = ribbonClient.asyncResource();
-        assertThat(asyncWebResource.getURI()).isEqualTo(URI.create("test.com:8080"));
+        assertThat(asyncWebResource.getURI().getScheme()).isEqualTo("http");
+        assertThat(asyncWebResource.getURI().getHost()).isEqualTo("test.com");
+        assertThat(asyncWebResource.getURI().getPort()).isEqualTo(8080);
+        assertThat(asyncWebResource.getURI()).isEqualTo(URI.create("http://test.com:8080"));
     }
 }
