@@ -8,7 +8,8 @@ import com.sun.jersey.api.client.WebResource;
 import com.yammer.dropwizard.client.JerseyClientBuilder;
 import com.yammer.dropwizard.config.Configuration;
 import com.yammer.dropwizard.config.Environment;
-import com.yammer.dropwizard.consul.ribbon.RibbonJerseyClientFactory;
+import com.yammer.dropwizard.consul.ribbon.RibbonClient;
+import com.yammer.dropwizard.consul.ribbon.RibbonClientFactory;
 import com.yammer.dropwizard.json.ObjectMapperFactory;
 import com.yammer.dropwizard.validation.Validator;
 import org.junit.Before;
@@ -20,7 +21,7 @@ import static org.fest.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class RibbonJerseyClientFactoryTest {
+public class RibbonClientTest {
     private Client client;
     private ZoneAwareLoadBalancer<Server> zoneAwareLoadBalancer;
 
@@ -37,24 +38,24 @@ public class RibbonJerseyClientFactoryTest {
     @Test
     public void webResourceHasAValidUri() {
         when(zoneAwareLoadBalancer.chooseServer()).thenReturn(new Server("test.com", 8080));
-        final RibbonJerseyClientFactory factory = new RibbonJerseyClientFactory(client, zoneAwareLoadBalancer);
-        final WebResource webResource = factory.webResource();
+        final RibbonClient ribbonClient = new RibbonClientFactory(zoneAwareLoadBalancer).wrap(client);
+        final WebResource webResource = ribbonClient.resource();
         assertThat(webResource.getURI()).isEqualTo(URI.create("test.com:8080"));
     }
 
     @Test(expected = IllegalStateException.class)
     public void webResourceHasANullUri() {
         when(zoneAwareLoadBalancer.chooseServer()).thenReturn(null);
-        final RibbonJerseyClientFactory factory = new RibbonJerseyClientFactory(client, zoneAwareLoadBalancer);
-        final WebResource webResource = factory.webResource();
+        final RibbonClient ribbonClient = new RibbonClientFactory(zoneAwareLoadBalancer).wrap(client);
+        final WebResource webResource = ribbonClient.resource();
         assertThat(webResource.getURI()).isEqualTo(URI.create("test.com:8080"));
     }
 
     @Test
     public void asyncWebResourceHasAValidUri() {
         when(zoneAwareLoadBalancer.chooseServer()).thenReturn(new Server("test.com", 8080));
-        final RibbonJerseyClientFactory factory = new RibbonJerseyClientFactory(client, zoneAwareLoadBalancer);
-        final AsyncWebResource asyncWebResource = factory.asyncWebResource();
+        final RibbonClient ribbonClient = new RibbonClientFactory(zoneAwareLoadBalancer).wrap(client);
+        final AsyncWebResource asyncWebResource = ribbonClient.asyncResource();
         assertThat(asyncWebResource.getURI()).isEqualTo(URI.create("test.com:8080"));
     }
 }
