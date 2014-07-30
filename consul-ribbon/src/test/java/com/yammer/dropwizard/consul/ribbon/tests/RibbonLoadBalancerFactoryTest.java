@@ -9,7 +9,7 @@ import com.yammer.dropwizard.consul.ribbon.RibbonLoadBalancerConfiguration;
 import com.yammer.dropwizard.consul.ribbon.RibbonLoadBalancerFactory;
 import com.yammer.dropwizard.consul.ribbon.RibbonServerList;
 import com.yammer.dropwizard.consul.ribbon.RibbonServerListFactory;
-import io.dropwizard.util.Duration;
+import com.yammer.dropwizard.util.Duration;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,9 +39,9 @@ public class RibbonLoadBalancerFactoryTest {
         final ZoneAwareLoadBalancer<Server> zoneAwareLoadBalancer = factory.create(new RibbonLoadBalancerConfiguration(serviceId));
         assertThat(zoneAwareLoadBalancer.getName()).isEqualTo(serviceId);
         assertThat(zoneAwareLoadBalancer
-                .getClientConfig()
-                .getPropertyAsInteger(CommonClientConfigKey.ServerListRefreshInterval, -1))
-                .isEqualTo(Ints.checkedCast(Duration.seconds(10).toMilliseconds()));
+            .getClientConfig()
+            .getPropertyAsInteger(CommonClientConfigKey.ServerListRefreshInterval, -1))
+            .isEqualTo(Ints.checkedCast(Duration.seconds(10).toMilliseconds()));
     }
 
     @Test

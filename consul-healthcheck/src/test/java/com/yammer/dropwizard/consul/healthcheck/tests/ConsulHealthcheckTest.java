@@ -1,10 +1,10 @@
 package com.yammer.dropwizard.consul.healthcheck.tests;
 
-import com.codahale.metrics.health.HealthCheck;
 import com.google.common.base.Optional;
 import com.sun.jersey.api.client.ClientResponse;
 import com.yammer.dropwizard.consul.client.ConsulClient;
 import com.yammer.dropwizard.consul.healthcheck.ConsulHealthcheck;
+import com.yammer.metrics.core.HealthCheck;
 import org.junit.Before;
 import org.junit.Test;
 

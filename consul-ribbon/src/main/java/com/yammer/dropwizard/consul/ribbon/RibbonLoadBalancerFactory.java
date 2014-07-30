@@ -19,13 +19,13 @@ public class RibbonLoadBalancerFactory {
         final DefaultClientConfigImpl clientConfig = new DefaultClientConfigImpl();
         clientConfig.setClientName(configuration.getServiceId());
         clientConfig.set(
-                CommonClientConfigKey.ServerListRefreshInterval,
-                Ints.checkedCast(configuration.getRefreshInterval().toMilliseconds()));
+            CommonClientConfigKey.ServerListRefreshInterval,
+            Ints.checkedCast(configuration.getRefreshInterval().toMilliseconds()));
         return LoadBalancerBuilder
-                .newBuilder()
-                .withClientConfig(clientConfig)
-                .withRule(new WeightedResponseTimeRule())
-                .withDynamicServerList(serverListFactory.create(configuration.getServiceId()))
-                .buildDynamicServerListLoadBalancer();
+            .newBuilder()
+            .withClientConfig(clientConfig)
+            .withRule(new WeightedResponseTimeRule())
+            .withDynamicServerList(serverListFactory.create(configuration.getServiceId()))
+            .buildDynamicServerListLoadBalancer();
     }
 }

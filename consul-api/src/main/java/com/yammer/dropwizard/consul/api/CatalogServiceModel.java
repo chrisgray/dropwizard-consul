@@ -12,17 +12,23 @@ import javax.validation.constraints.NotNull;
 import java.net.InetAddress;
 
 public class CatalogServiceModel {
-    @NotNull @Valid
+    @NotNull
+    @Valid
     private final InetAddress address;
-    @NotNull @NotEmpty
+    @NotNull
+    @NotEmpty
     private final String node;
-    @NotNull @NotEmpty
+    @NotNull
+    @NotEmpty
     private final String serviceId;
-    @NotNull @NotEmpty
+    @NotNull
+    @NotEmpty
     private final String serviceName;
-    @Min(value = 0) @Max(Short.MAX_VALUE)
+    @Min(value = 0)
+    @Max(Short.MAX_VALUE)
     private final short servicePort;
-    @NotNull @Valid
+    @NotNull
+    @Valid
     private final ImmutableList<String> serviceTags;
 
     @JsonCreator

@@ -43,26 +43,28 @@ public class RibbonServerListTest {
     @Test
     public void updatedListProperlyWorks() {
         when(consulClient.v1CatalogService(serviceId)).thenReturn(Optional
-                .<Iterable<CatalogServiceModel>>of(
-                        ImmutableList.of(new CatalogServiceModel(
-                                InetAddresses.forString("127.0.0.1"),
-                                "test.com",
-                                serviceId,
-                                serviceId,
-                                (short) 8080,
-                                ImmutableList.<String>of()))));
+            .<Iterable<CatalogServiceModel>>of(
+                ImmutableList.of(new CatalogServiceModel(
+                    InetAddresses.forString("127.0.0.1"),
+                    "test.com",
+                    serviceId,
+                    serviceId,
+                    (short) 8080,
+                    ImmutableList.<String>of()))
+            ));
         final RibbonServerList serverList = new RibbonServerListFactory(consulClient).create(serviceId);
         assertThat(serverList.getInitialListOfServers()).containsExactly(new Server("test.com", 8080));
 
         when(consulClient.v1CatalogService(serviceId)).thenReturn(Optional
-                .<Iterable<CatalogServiceModel>>of(
-                        ImmutableList.of(new CatalogServiceModel(
-                                InetAddresses.forString("127.0.0.1"),
-                                "test2.com",
-                                serviceId,
-                                serviceId,
-                                (short)9090,
-                                ImmutableList.<String>of()))));
+            .<Iterable<CatalogServiceModel>>of(
+                ImmutableList.of(new CatalogServiceModel(
+                    InetAddresses.forString("127.0.0.1"),
+                    "test2.com",
+                    serviceId,
+                    serviceId,
+                    (short) 9090,
+                    ImmutableList.<String>of()))
+            ));
         assertThat(serverList.getUpdatedListOfServers()).containsExactly(new Server("test2.com", 9090));
     }
 }

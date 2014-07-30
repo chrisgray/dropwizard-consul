@@ -1,7 +1,7 @@
 package com.yammer.dropwizard.consul.healthcheck;
 
 import com.yammer.dropwizard.consul.client.ConsulClientConfiguration;
-import io.dropwizard.util.Duration;
+import com.yammer.dropwizard.util.Duration;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.Valid;

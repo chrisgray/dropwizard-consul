@@ -21,8 +21,9 @@
             <artifactId>consul-client</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.dropwizard</groupId>
+            <groupId>com.yammer.dropwizard</groupId>
             <artifactId>dropwizard-testing</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

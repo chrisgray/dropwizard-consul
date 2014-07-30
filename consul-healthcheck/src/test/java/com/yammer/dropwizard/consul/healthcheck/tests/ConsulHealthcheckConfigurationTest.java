@@ -1,35 +1,24 @@
 package com.yammer.dropwizard.consul.healthcheck.tests;
 
-import com.google.common.io.Resources;
+import com.yammer.dropwizard.config.ConfigurationFactory;
 import com.yammer.dropwizard.consul.healthcheck.ConsulHealthcheckConfiguration;
-import io.dropwizard.configuration.ConfigurationFactory;
-import io.dropwizard.jackson.Jackson;
-import io.dropwizard.util.Duration;
-import io.dropwizard.validation.valuehandling.OptionalValidatedValueUnwrapper;
-import org.hibernate.validator.HibernateValidator;
+import com.yammer.dropwizard.util.Duration;
+import com.yammer.dropwizard.validation.Validator;
 import org.junit.Test;
 
-import javax.validation.Validation;
 import java.io.File;
 import java.net.URI;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
+
 public class ConsulHealthcheckConfigurationTest {
     @Test
     public void parseConfiguration() throws Exception {
-        final ConsulHealthcheckConfiguration configuration =
-                new ConfigurationFactory<>(
-                        ConsulHealthcheckConfiguration.class,
-                        Validation
-                                .byProvider(HibernateValidator.class)
-                                .configure()
-                                .addValidatedValueHandler(new OptionalValidatedValueUnwrapper())
-                                .buildValidatorFactory()
-                        .getValidator(),
-                        Jackson.newObjectMapper(),
-                        "dw.")
-                .build(new File(Resources.getResource("healthcheckConfiguration.yml").toURI()));
+        final ConfigurationFactory<ConsulHealthcheckConfiguration> configurationFactory
+            = ConfigurationFactory.forClass(ConsulHealthcheckConfiguration.class, new Validator());
+        final File configFile = new File("consul-healthcheck/src/test/resources/healthcheckConfiguration.yml");
+        final ConsulHealthcheckConfiguration configuration = configurationFactory.build(configFile);
         assertThat(configuration.getApplicationName()).isEqualTo("test");
         assertThat(configuration.getCheckInterval()).isEqualTo(Duration.milliseconds(2500));
         assertThat(configuration.getClient().getConnectionTimeout()).isEqualTo(Duration.milliseconds(100));

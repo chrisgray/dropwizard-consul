@@ -1,6 +1,6 @@
 package com.yammer.dropwizard.consul.client;
 
-import io.dropwizard.client.JerseyClientConfiguration;
+import com.yammer.dropwizard.client.JerseyClientConfiguration;
 
 import javax.validation.constraints.NotNull;
 import java.net.URI;

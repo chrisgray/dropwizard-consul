@@ -26,7 +26,7 @@ public class RibbonServerList implements ServerList<Server> {
 
     @Override
     public List<Server> getUpdatedListOfServers() {
-       final Optional<Iterable<CatalogServiceModel>> models = client.v1CatalogService(serviceId);
+        final Optional<Iterable<CatalogServiceModel>> models = client.v1CatalogService(serviceId);
         if (models.isPresent()) {
             serverList = Servers.from(models.get());
         }

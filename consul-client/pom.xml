@@ -17,16 +17,17 @@
             <artifactId>consul-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.dropwizard</groupId>
+            <groupId>com.yammer.dropwizard</groupId>
             <artifactId>dropwizard-client</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.dropwizard</groupId>
+            <groupId>com.yammer.dropwizard</groupId>
             <artifactId>dropwizard-testing</artifactId>
         </dependency>
         <dependency>
             <groupId>com.netflix.ribbon</groupId>
             <artifactId>ribbon-loadbalancer</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

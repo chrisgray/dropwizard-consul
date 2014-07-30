@@ -15,6 +15,6 @@ public class RibbonServerListFactory {
     public RibbonServerList create(String serviceId) {
         final Optional<Iterable<CatalogServiceModel>> models = client.v1CatalogService(serviceId);
         return new RibbonServerList(Servers
-                .from(models.or(ImmutableList.<CatalogServiceModel>of())), client, serviceId);
+            .from(models.or(ImmutableList.<CatalogServiceModel>of())), client, serviceId);
     }
 }

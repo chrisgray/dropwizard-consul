@@ -2,17 +2,19 @@ package com.yammer.dropwizard.consul.ribbon;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.dropwizard.util.Duration;
+import com.yammer.dropwizard.util.Duration;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 public class RibbonLoadBalancerConfiguration {
-    @NotNull @NotEmpty
+    @NotNull
+    @NotEmpty
     private String serviceId;
 
-    @NotNull @Valid
+    @NotNull
+    @Valid
     private Duration refreshInterval = Duration.seconds(10);
 
     public RibbonLoadBalancerConfiguration(String serviceId) {

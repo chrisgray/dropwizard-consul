@@ -1,7 +1,8 @@
 package com.yammer.dropwizard.consul.client;
 
-import io.dropwizard.client.JerseyClientBuilder;
-import io.dropwizard.setup.Environment;
+
+import com.yammer.dropwizard.client.JerseyClientBuilder;
+import com.yammer.dropwizard.config.Environment;
 
 public class ConsulClientFactory {
     private final ConsulClientConfiguration configuration;
@@ -12,10 +13,11 @@ public class ConsulClientFactory {
 
     public ConsulClient create(Environment environment) {
         return new ConsulClient(
-                environment.metrics(),
-                new JerseyClientBuilder(environment)
+            new JerseyClientBuilder()
+                .using(environment)
                 .using(configuration)
-                .build("consul-client"),
-                configuration.getUri());
+                .build(),
+            configuration.getUri()
+        );
     }
 }

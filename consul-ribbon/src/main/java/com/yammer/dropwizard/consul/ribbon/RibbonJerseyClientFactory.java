@@ -27,13 +27,13 @@ public class RibbonJerseyClientFactory {
 
     public WebResource webResource() {
         return client.resource(UriBuilder
-                .fromPath(fetchServerOrThrow().getHostPort())
-                .build());
+            .fromPath(fetchServerOrThrow().getHostPort())
+            .build());
     }
 
     public AsyncWebResource asyncWebResource() {
         return client.asyncResource(UriBuilder
-                .fromPath(fetchServerOrThrow().getHostPort())
-                .build());
+            .fromPath(fetchServerOrThrow().getHostPort())
+            .build());
     }
 }
