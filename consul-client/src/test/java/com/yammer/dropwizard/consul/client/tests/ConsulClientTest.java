@@ -45,7 +45,7 @@ public class ConsulClientTest {
 
     }
 
-    @Test
+    @Test @Ignore
     public void noConsulAgent() {
         configuration.setUri(URI.create("http://localhost:12345"));
         final ConsulClient client = new ConsulClientFactory(configuration).create(environment);
