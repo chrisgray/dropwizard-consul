@@ -17,20 +17,20 @@ import static com.codahale.metrics.MetricRegistry.name;
 public class ConsulClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConsulClient.class);
     protected static final String v1CheckPassId = "/v1/agent/check/pass";
-    private final Timer v1AgentCheckPassTimer;
+//    private final Timer v1AgentCheckPassTimer;
     protected final Client client;
     protected final URI consulUri;
 
-    public ConsulClient(MetricRegistry metricRegistry,
+    public ConsulClient(//MetricRegistry metricRegistry,
                         Client client,
                         URI consulUri) {
-        this.v1AgentCheckPassTimer = metricRegistry.timer(name(ConsulClient.class, "v1AgentCheckPass"));
+//        this.v1AgentCheckPassTimer = metricRegistry.timer(name(ConsulClient.class, "v1AgentCheckPass"));
         this.client = client;
         this.consulUri = consulUri;
     }
 
     public Optional<ClientResponse> v1AgentCheckPass(String checkId) {
-        try (Timer.Context timerContext = v1AgentCheckPassTimer.time()) {
+//        try (Timer.Context timerContext = v1AgentCheckPassTimer.time()) {
             ClientResponse clientResponse = null;
             try {
                 return Optional.of(clientResponse = client.resource(consulUri)
@@ -44,7 +44,7 @@ public class ConsulClient {
                     clientResponse.bufferEntity();
                     clientResponse.close();
                 }
-            }
+//            }
             return Optional.absent();
         }
     }
