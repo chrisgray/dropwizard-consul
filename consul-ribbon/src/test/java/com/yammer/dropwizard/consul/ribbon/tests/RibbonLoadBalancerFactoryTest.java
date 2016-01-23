@@ -1,5 +1,8 @@
 package com.yammer.dropwizard.consul.ribbon.tests;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import com.google.common.collect.ImmutableList;
 import com.google.common.primitives.Ints;
 import com.netflix.client.config.CommonClientConfigKey;
@@ -9,13 +12,9 @@ import com.yammer.dropwizard.consul.ribbon.RibbonLoadBalancerConfiguration;
 import com.yammer.dropwizard.consul.ribbon.RibbonLoadBalancerFactory;
 import com.yammer.dropwizard.consul.ribbon.RibbonServerList;
 import com.yammer.dropwizard.consul.ribbon.RibbonServerListFactory;
-import com.yammer.dropwizard.util.Duration;
+import io.dropwizard.util.Duration;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.fest.assertions.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class RibbonLoadBalancerFactoryTest {
     private RibbonServerListFactory serverListFactory;
