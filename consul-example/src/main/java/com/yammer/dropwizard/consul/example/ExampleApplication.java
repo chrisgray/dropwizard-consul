@@ -6,21 +6,23 @@ import com.yammer.dropwizard.consul.ribbon.RibbonClientFactory;
 import com.yammer.dropwizard.consul.ribbon.RibbonLoadBalancerConfiguration;
 import com.yammer.dropwizard.consul.ribbon.RibbonLoadBalancerFactory;
 import com.yammer.dropwizard.consul.ribbon.RibbonServerListFactory;
-
 import io.dropwizard.Application;
 import io.dropwizard.Configuration;
 import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.util.Duration;
-
 import java.net.URI;
-
 import javax.ws.rs.client.Client;
 
-public class ExampleService extends Application<Configuration> {
+public class ExampleApplication extends Application<Configuration> {
     public static void main(String[] args) throws Exception {
-        new ExampleService().run(args);
+        new ExampleApplication().run(args);
+    }
+
+    @Override
+    public String getName() {
+        return "example";
     }
 
     @Override

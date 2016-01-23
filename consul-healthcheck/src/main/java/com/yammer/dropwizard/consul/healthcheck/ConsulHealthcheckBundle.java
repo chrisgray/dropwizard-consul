@@ -1,11 +1,9 @@
 package com.yammer.dropwizard.consul.healthcheck;
 
 import com.yammer.dropwizard.consul.client.ConsulClientFactory;
-
 import io.dropwizard.ConfiguredBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-
 
 public class ConsulHealthcheckBundle implements ConfiguredBundle<ConsulHealthcheckConfiguration> {
     @Override
@@ -15,10 +13,9 @@ public class ConsulHealthcheckBundle implements ConfiguredBundle<ConsulHealthche
 
     @Override
     public void run(ConsulHealthcheckConfiguration configuration, Environment environment) throws Exception {
-
         final ConsulClientFactory clientFactory = new ConsulClientFactory(configuration.getClient());
         final ConsulHealthcheck healthcheck = new ConsulHealthcheck(
-            configuration.getApplicationName(),
+                configuration.getApplicationName(),
             clientFactory.create(environment));
         environment.healthChecks().register(configuration.getApplicationName(), healthcheck);
         environment
