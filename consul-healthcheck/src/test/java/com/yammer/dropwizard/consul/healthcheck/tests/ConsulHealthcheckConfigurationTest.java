@@ -1,24 +1,22 @@
 package com.yammer.dropwizard.consul.healthcheck.tests;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import com.google.common.io.Resources;
-import com.yammer.dropwizard.config.ConfigurationFactory;
 import com.yammer.dropwizard.consul.healthcheck.ConsulHealthcheckConfiguration;
-import com.yammer.dropwizard.util.Duration;
-import com.yammer.dropwizard.validation.Validator;
+import io.dropwizard.configuration.ConfigurationFactory;
+import io.dropwizard.jackson.Jackson;
+import io.dropwizard.util.Duration;
+import io.dropwizard.validation.BaseValidator;
 import org.junit.Test;
-
 import java.io.File;
 import java.net.URI;
-
-import static org.fest.assertions.api.Assertions.assertThat;
-
 
 public class ConsulHealthcheckConfigurationTest {
 
     @Test
     public void parseConfiguration() throws Exception {
         final ConfigurationFactory<ConsulHealthcheckConfiguration> configurationFactory
-            = ConfigurationFactory.forClass(ConsulHealthcheckConfiguration.class, new Validator());
+            = new ConfigurationFactory<>(ConsulHealthcheckConfiguration.class, BaseValidator.newValidator(), Jackson.newObjectMapper(), "dw");
         final File configFile = new File(Resources.getResource("healthcheckConfiguration.yml").toURI());
         final ConsulHealthcheckConfiguration configuration = configurationFactory.build(configFile);
         assertThat(configuration.getApplicationName()).isEqualTo("test");

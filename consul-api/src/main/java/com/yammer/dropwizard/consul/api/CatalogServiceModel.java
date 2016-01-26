@@ -1,16 +1,18 @@
 package com.yammer.dropwizard.consul.api;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.ImmutableList;
 import org.hibernate.validator.constraints.NotEmpty;
-
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.net.InetAddress;
+import java.util.Objects;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CatalogServiceModel {
     @NotNull
     @Valid
@@ -77,24 +79,16 @@ public class CatalogServiceModel {
 
         CatalogServiceModel that = (CatalogServiceModel) o;
 
-        if (servicePort != that.servicePort) return false;
-        if (!address.equals(that.address)) return false;
-        if (!node.equals(that.node)) return false;
-        if (!serviceId.equals(that.serviceId)) return false;
-        if (!serviceName.equals(that.serviceName)) return false;
-        if (!serviceTags.equals(that.serviceTags)) return false;
-
-        return true;
+        return Objects.equals(servicePort, that.servicePort)
+            && Objects.equals(address, that.address)
+            && Objects.equals(node, that.node)
+            && Objects.equals(serviceId, that.serviceId)
+            && Objects.equals(serviceName, that.serviceName)
+            && Objects.equals(serviceTags, that.serviceTags);
     }
 
     @Override
     public int hashCode() {
-        int result = address.hashCode();
-        result = 31 * result + node.hashCode();
-        result = 31 * result + serviceId.hashCode();
-        result = 31 * result + serviceName.hashCode();
-        result = 31 * result + (int) servicePort;
-        result = 31 * result + serviceTags.hashCode();
-        return result;
+        return Objects.hash(address, node, serviceId, serviceName, servicePort, serviceTags);
     }
 }

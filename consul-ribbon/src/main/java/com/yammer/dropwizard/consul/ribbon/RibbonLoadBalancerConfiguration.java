@@ -2,8 +2,10 @@ package com.yammer.dropwizard.consul.ribbon;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.yammer.dropwizard.util.Duration;
+import io.dropwizard.util.Duration;
 import org.hibernate.validator.constraints.NotEmpty;
+
+import java.util.Objects;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -51,16 +53,12 @@ public class RibbonLoadBalancerConfiguration {
 
         RibbonLoadBalancerConfiguration that = (RibbonLoadBalancerConfiguration) o;
 
-        if (!refreshInterval.equals(that.refreshInterval)) return false;
-        if (!serviceId.equals(that.serviceId)) return false;
-
-        return true;
+        return Objects.equals(refreshInterval, that.refreshInterval)
+               && Objects.equals(serviceId,  that.serviceId);
     }
 
     @Override
     public int hashCode() {
-        int result = serviceId.hashCode();
-        result = 31 * result + refreshInterval.hashCode();
-        return result;
+        return Objects.hash(serviceId, refreshInterval);
     }
 }

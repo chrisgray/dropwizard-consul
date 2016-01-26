@@ -1,25 +1,22 @@
 package com.yammer.dropwizard.consul.ribbon.tests;
 
-import com.netflix.loadbalancer.Server;
-import com.netflix.loadbalancer.ZoneAwareLoadBalancer;
-import com.sun.jersey.api.client.AsyncWebResource;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.WebResource;
-import com.yammer.dropwizard.client.JerseyClientBuilder;
-import com.yammer.dropwizard.config.Configuration;
-import com.yammer.dropwizard.config.Environment;
-import com.yammer.dropwizard.consul.ribbon.RibbonClient;
-import com.yammer.dropwizard.consul.ribbon.RibbonClientFactory;
-import com.yammer.dropwizard.json.ObjectMapperFactory;
-import com.yammer.dropwizard.validation.Validator;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.net.URI;
-
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import com.codahale.metrics.MetricRegistry;
+import com.netflix.loadbalancer.Server;
+import com.netflix.loadbalancer.ZoneAwareLoadBalancer;
+import com.yammer.dropwizard.consul.ribbon.RibbonClient;
+import com.yammer.dropwizard.consul.ribbon.RibbonClientFactory;
+import io.dropwizard.client.JerseyClientBuilder;
+import io.dropwizard.jackson.Jackson;
+import io.dropwizard.setup.Environment;
+import io.dropwizard.validation.BaseValidator;
+import org.junit.Before;
+import org.junit.Test;
+import java.net.URI;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.WebTarget;
 
 public class RibbonClientTest {
     private Client client;
@@ -28,10 +25,10 @@ public class RibbonClientTest {
     @Before
     @SuppressWarnings("unchecked")
     public void setup() {
-        final Environment environment = new Environment("test-environment", new Configuration(), new ObjectMapperFactory(), new Validator());
-        client = new JerseyClientBuilder()
-            .using(environment)
-            .build();
+        final Environment environment = new Environment("test-environment",
+            Jackson.newObjectMapper(), BaseValidator.newValidator(), new MetricRegistry(),
+            getClass().getClassLoader());
+        client = new JerseyClientBuilder(environment).build("consul");
         zoneAwareLoadBalancer = mock(ZoneAwareLoadBalancer.class);
     }
 
@@ -39,29 +36,29 @@ public class RibbonClientTest {
     public void webResourceHasAValidUri() {
         when(zoneAwareLoadBalancer.chooseServer()).thenReturn(new Server("test.com", 8080));
         final RibbonClient ribbonClient = new RibbonClientFactory(zoneAwareLoadBalancer).wrap(client);
-        final WebResource webResource = ribbonClient.resource();
-        assertThat(webResource.getURI().getScheme()).isEqualTo("http");
-        assertThat(webResource.getURI().getHost()).isEqualTo("test.com");
-        assertThat(webResource.getURI().getPort()).isEqualTo(8080);
-        assertThat(webResource.getURI()).isEqualTo(URI.create("http://test.com:8080"));
+        final WebTarget webResource = ribbonClient.target();
+        assertThat(webResource.getUri().getScheme()).isEqualTo("http");
+        assertThat(webResource.getUri().getHost()).isEqualTo("test.com");
+        assertThat(webResource.getUri().getPort()).isEqualTo(8080);
+        assertThat(webResource.getUri()).isEqualTo(URI.create("http://test.com:8080"));
     }
 
     @Test(expected = IllegalStateException.class)
     public void webResourceHasANullUri() {
         when(zoneAwareLoadBalancer.chooseServer()).thenReturn(null);
         final RibbonClient ribbonClient = new RibbonClientFactory(zoneAwareLoadBalancer).wrap(client);
-        final WebResource webResource = ribbonClient.resource();
-        assertThat(webResource.getURI()).isEqualTo(URI.create("http://test.com:8080"));
+        final WebTarget webResource = ribbonClient.target();
+        assertThat(webResource.getUri()).isEqualTo(URI.create("http://test.com:8080"));
     }
 
     @Test
     public void asyncWebResourceHasAValidUri() {
         when(zoneAwareLoadBalancer.chooseServer()).thenReturn(new Server("test.com", 8080));
         final RibbonClient ribbonClient = new RibbonClientFactory(zoneAwareLoadBalancer).wrap(client);
-        final AsyncWebResource asyncWebResource = ribbonClient.asyncResource();
-        assertThat(asyncWebResource.getURI().getScheme()).isEqualTo("http");
-        assertThat(asyncWebResource.getURI().getHost()).isEqualTo("test.com");
-        assertThat(asyncWebResource.getURI().getPort()).isEqualTo(8080);
-        assertThat(asyncWebResource.getURI()).isEqualTo(URI.create("http://test.com:8080"));
+        final WebTarget asyncWebResource = ribbonClient.target();
+        assertThat(asyncWebResource.getUri().getScheme()).isEqualTo("http");
+        assertThat(asyncWebResource.getUri().getHost()).isEqualTo("test.com");
+        assertThat(asyncWebResource.getUri().getPort()).isEqualTo(8080);
+        assertThat(asyncWebResource.getUri()).isEqualTo(URI.create("http://test.com:8080"));
     }
 }

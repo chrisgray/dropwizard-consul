@@ -1,24 +1,28 @@
 package com.yammer.dropwizard.consul.example;
 
-import com.sun.jersey.api.client.Client;
-import com.yammer.dropwizard.Service;
-import com.yammer.dropwizard.client.JerseyClientBuilder;
-import com.yammer.dropwizard.config.Bootstrap;
-import com.yammer.dropwizard.config.Configuration;
-import com.yammer.dropwizard.config.Environment;
 import com.yammer.dropwizard.consul.client.ConsulClientConfiguration;
 import com.yammer.dropwizard.consul.client.ConsulClientFactory;
 import com.yammer.dropwizard.consul.ribbon.RibbonClientFactory;
 import com.yammer.dropwizard.consul.ribbon.RibbonLoadBalancerConfiguration;
 import com.yammer.dropwizard.consul.ribbon.RibbonLoadBalancerFactory;
 import com.yammer.dropwizard.consul.ribbon.RibbonServerListFactory;
-import com.yammer.dropwizard.util.Duration;
-
+import io.dropwizard.Application;
+import io.dropwizard.Configuration;
+import io.dropwizard.client.JerseyClientBuilder;
+import io.dropwizard.setup.Bootstrap;
+import io.dropwizard.setup.Environment;
+import io.dropwizard.util.Duration;
 import java.net.URI;
+import javax.ws.rs.client.Client;
 
-public class ExampleService extends Service<Configuration> {
+public class ExampleApplication extends Application<Configuration> {
     public static void main(String[] args) throws Exception {
-        new ExampleService().run(args);
+        new ExampleApplication().run(args);
+    }
+
+    @Override
+    public String getName() {
+        return "example";
     }
 
     @Override
@@ -32,7 +36,7 @@ public class ExampleService extends Service<Configuration> {
         final RibbonLoadBalancerConfiguration ribbonLoadBalancerConfiguration = new RibbonLoadBalancerConfiguration(
                 "example",
                 Duration.seconds(2));
-        final Client client = new JerseyClientBuilder().using(environment).build();
+        final Client client = new JerseyClientBuilder(environment).build("example");
         final RibbonClientFactory ribbonClientFactory = new RibbonClientFactory(
                 new RibbonLoadBalancerFactory(
                         new RibbonServerListFactory(

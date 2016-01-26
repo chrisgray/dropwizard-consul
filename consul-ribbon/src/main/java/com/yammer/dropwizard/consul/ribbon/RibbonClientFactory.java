@@ -1,8 +1,8 @@
 package com.yammer.dropwizard.consul.ribbon;
 
+import javax.ws.rs.client.Client;
 import com.netflix.loadbalancer.Server;
 import com.netflix.loadbalancer.ZoneAwareLoadBalancer;
-import com.sun.jersey.api.client.Client;
 
 public class RibbonClientFactory {
     private final ZoneAwareLoadBalancer<Server> loadBalancer;

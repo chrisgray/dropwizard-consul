@@ -2,14 +2,12 @@ package com.yammer.dropwizard.consul.ribbon;
 
 import com.netflix.loadbalancer.Server;
 import com.netflix.loadbalancer.ZoneAwareLoadBalancer;
-import com.sun.jersey.api.client.AsyncWebResource;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.WebResource;
-
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.UriBuilder;
-import java.net.URI;
+import org.glassfish.jersey.client.JerseyClient;
 
-public class RibbonClient extends Client {
+public class RibbonClient extends JerseyClient {
     protected ZoneAwareLoadBalancer<Server> loadBalancer;
     protected Client client;
 
@@ -18,26 +16,10 @@ public class RibbonClient extends Client {
         this.client = client;
     }
 
-    public WebResource resource() {
-        return super.resource(UriBuilder
+    public WebTarget target() {
+        return super.target(UriBuilder
                 .fromPath("http://" + fetchServerOrThrow().getHostPort())
                 .build());
-    }
-
-    public AsyncWebResource asyncResource() {
-        return super.asyncResource(UriBuilder
-                .fromPath("http://" + fetchServerOrThrow().getHostPort())
-                .build());
-    }
-
-    @Override @Deprecated
-    public WebResource resource(URI u) {
-        return resource();
-    }
-
-    @Override @Deprecated
-    public AsyncWebResource asyncResource(URI u) {
-        return asyncResource();
     }
 
     private Server fetchServerOrThrow() {
