@@ -1,10 +1,14 @@
 package com.yammer.dropwizard.consul.client.tests;
 
+import static com.pszymczyk.consul.ConsulStarterBuilder.consulStarter;
 import static org.assertj.core.api.Assertions.assertThat;
 import com.codahale.metrics.MetricRegistry;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.net.InetAddresses;
+import com.pszymczyk.consul.ConsulStarter;
+import com.pszymczyk.consul.ConsulStarterBuilder;
+import com.pszymczyk.consul.junit.ConsulResource;
 import com.yammer.dropwizard.consul.api.CatalogServiceModel;
 import com.yammer.dropwizard.consul.client.ConsulClient;
 import com.yammer.dropwizard.consul.client.ConsulClientConfiguration;
@@ -13,7 +17,7 @@ import io.dropwizard.jackson.Jackson;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.validation.BaseValidator;
 import org.junit.Before;
-import org.junit.Ignore;
+import org.junit.ClassRule;
 import org.junit.Test;
 import javax.ws.rs.core.Response;
 import java.net.URI;
@@ -21,6 +25,9 @@ import java.net.URI;
 public class ConsulClientTest {
     private ConsulClientConfiguration configuration;
     private Environment environment;
+
+    @ClassRule
+    public static final ConsulResource consul = new ConsulResource(consulStarter().withHttpPort(8500).build());
 
     @Before
     public void setup() {
@@ -38,7 +45,6 @@ public class ConsulClientTest {
     }
 
     @Test
-    @Ignore //Need an actual real check and live consul agent running
     public void integrationWithInvalidCheckId() {
         final ConsulClient client = new ConsulClientFactory(configuration).create(environment);
         final Optional<Response> clientResponse = client.v1AgentCheckPass("invalid:id");
@@ -47,7 +53,6 @@ public class ConsulClientTest {
     }
 
     @Test
-    @Ignore //Need an actual real check and live consul agent running
     public void integrationWithActualCheck() {
         final ConsulClient client = new ConsulClientFactory(configuration).create(environment);
         final Optional<Response> clientResponse = client.v1AgentCheckPass("service:foobar");
@@ -56,7 +61,6 @@ public class ConsulClientTest {
     }
 
     @Test
-    @Ignore
     public void v1CatalogServiceId() {
         final ConsulClient client = new ConsulClientFactory(configuration).create(environment);
         final Optional<Iterable<CatalogServiceModel>> catalogServiceModels = client.v1CatalogService("foobar");

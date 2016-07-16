@@ -30,5 +30,11 @@
             <artifactId>ribbon-loadbalancer</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.pszymczyk.consul</groupId>
+            <artifactId>embedded-consul</artifactId>
+            <version>0.1.7</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>
